@@ -27,4 +27,83 @@ overflow(值不为visible)、display(flow-root)、contain(layout、content、str
 浮动高度无法撑开，外边距合并(垂直方向边距会叠加)
 </pre>
 	</li>
+	<li>
+<pre>布局自适应的方式
+a) 单位使用rem和em，都是基于字体大小的相对单位，em使用当前元素的字体大小确定实际尺寸，而rem是根据html根节点的字体大小
+b) 浮动，inline-block
+c) flex
+d) @media的查询条件，针对不同尺寸的容器使用不同的样式
+e) 不使用固定宽高，使用百分比
+</pre>
+	</li>
+	<li>
+<pre>伪类与伪元素的区别
+伪类定义某元素的某种状态或者筛选
+:hover,:active,:focus,:visited,:link,
+:root,:not,:first-child,:last-child,:only-child,:only-of-type,:empty,:enabled,:disabled,:checked
+:required,:valid,:invalid
+:nth-child(n),:nth-of-type(n)
+
+伪元素不存在于DOM树中的虚拟元素，可以像正常的html元素一样定义css,但是无法使用js获取
+::before,::after,
+::first-letter,::first-line
+::selection
+</pre>
+	</li>
+	<li>
+<pre>盒模型
+主要包括margin,padding,content,border，使用box-sizing可以修改width属性作用的范围
+box-sizing: padding-box
+box-sizing: content-box W3C标准
+box-sizing: border-box IE
+块级元素margin,padding均有效，但是外边距会叠加
+内联元素margin-left,margin-right,padding-left,padding-right有效，上下的margin,padding无效
+块级元素：div,h1\h6,hr,ol,ul,li,p
+</pre>
+	</li>
+	<li>
+<pre>常见兼容性
+a) 不同浏览器的标签默认margin,padding不同
+b) IE6双边距bug，块级元素浮动，且设置了水平margin，其margin翻倍，解决：display:inline
+c) 不同浏览器设置不同的样式
+{
+	background-color:#f1ee18;/*所有识别*/
+	.background-color:#00deff\9; /*IE6、7、8识别*/
+	+background-color:#a200ff;/*IE6、7识别*/
+	_background-color:#1e0bd1;/*IE6识别*/
+}
+</pre>
+	</li>
+	<li>
+<pre>定位postion
+fixed,absolute都会使元素脱离文档流
+fixed: 元素相对于浏览器窗口的位置，若祖先元素设置了transform则相对于祖先元素移动
+releate: 元素相对于自身位置偏移, 元素不脱离文档流，不影响后面元素的布局
+absolute: 相对于距该元素最近的已定位的祖先元素
+static: 默认值
+inherit: 继承，IE8不支持
+</pre>
+	</li>
+	<li>
+<pre>继承属性
+会继承的属性: font-size, font-family, color
+不会继承的属性: border, padding, margin, width, height
+</pre>
+	</li>
+	<li>
+<pre>水平、垂直居中
+水平居中：text-align:center, margin: 0 auto, absolute+transform:translateX(), absolute+margin-left(已知宽度), flex+justify-content, 
+垂直居中：line-height(已知高度), absolute+transform:translateY(), absolute+margin-top(已知高度), flex+align-items, flex+align-self(子元素), table
+水平垂直居中: absolute+transform::translate(), absolute+margin-top+margin-left, flex+justify-content+align-items
+</pre>
+	</li>
+	<li>
+<pre>两列高度一致
+</pre>
+	</li>
+	<li>
+<pre>浏览器怎么解析css选择器
+CSS选择器的解析是从右向左，先找到所有最右节点，遍历每个节点，向上找父节点，直到根元素或者满足条件的匹配规则，则结束这个节点的遍历。
+</pre>
+	</li>
 </ol>

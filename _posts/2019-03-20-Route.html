@@ -1,0 +1,25 @@
+---
+layout: default
+title: route路由
+---
+<h2>{{ page.title }}</h2>
+<ol>
+	<li>
+<pre>单页应用SPA
+ajax，异步请求在不刷新页面的情况下可以实现局部更新；
+spa，页面交互页面跳转都不刷新
+</pre>
+	</li>
+	<li>
+<pre>hash
+hash路由中带#，主要是监听URL中的hash变化来进行路由跳转，hash值变化不会导致浏览器向服务器发出请求，hash变化会触发hashchange事件。
+</pre>
+	</li>
+	<li>
+<pre>history模式
+html5中有两个api，pushState和replaceState，通过这两个api可以改变url地址且不会发送请求，历史浏览记录变化会触发popstate事件。
+pushState: 新增一条浏览记录，不会触发页面刷新，这是导致history对象变化，地址栏会有反应。
+replaceState: 修改浏览器历史中当前记录为新的url
+</pre>
+	</li>
+</ol>

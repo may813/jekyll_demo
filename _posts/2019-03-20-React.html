@@ -1,0 +1,76 @@
+---
+layout: default
+title: React
+---
+<h2>{{ page.title }}</h2>
+<ol>
+	<li>
+<pre>客户端渲染与服务端渲染比较
+服务端渲染: 浏览器地址栏输入url发送请求，服务端接收到请求后解析路由，并向客户端发送响应请求，包含html文档，浏览器接收到响应后渲染html。
+优点：良好的SEO,
+缺点：每次刷新页面都会发送请求，路由解析匹配，数据库查询，html文档的生成都放在服务端，增加服务端处理负担
+
+客户端渲染: 路由解析、html渲染放在客户端，服务端只需要提供页面所需的JSON数据
+优点：减轻服务端的资源消耗，只传输JSON数据比传输HTML文档所需的网络请求时间短，
+缺点：不利于SEO，客户端渲染是js加载完之后才渲染HTML文档，在此期间有一段”白屏率“
+
+客户端渲染的解决方案：
+a) 首屏采用服务端渲染，降低白屏率，首屏以外的内容客户端渲染，逐渐产出内容，用户无感（解决白屏，且利于SEO）
+b) 服务端渲染需要引入node，需要了解更多服务端知道
+</pre>
+	</li>
+	<li>
+<pre>React服务端渲染 Next.js
+React提供了4个API将虚拟DOM输出为HTML文本
+1）ReactDOMServer.renderToString(element)
+2）ReactDOMServer.renderToStaticMarkup(element)  生成的页面不具有响应，只适合用于静态页面
+3）ReactDOMServer.renderToNodeStream(element) 服务端使用
+4）ReactDOMServer.renderToStaticNodeStream(element) 服务端使用
+</pre>
+	</li>
+	<li>
+<pre>生命周期
+</pre>
+	</li>
+	<li>
+<pre>虚拟DOM
+React里JSX生成的就是虚拟DOM，每一个元素对应的虚拟DOM包含了该元素的类型type,属性className...和后代元素children
+{
+	type:'div',
+	props: {
+		className: 'cn',
+		children: [
+			'Content1',
+			'Content2'
+		]
+	}
+}
+
+初次虚拟DOM转译为浏览器DOM节点的规则：
+a) 如果type是String类型的标签名，则创建一个标签并附带所有props属性
+b) 如果type是函数或者类，调用该函数或者类，并对结果递归上述过程
+c) 如果props下有chilren属性，则在该父节点下针对每个child重复以上过程
+
+更新DOM,diff算法
+a) 更新前后type,props都不变，则DOM不变
+b) type不变，props改变，React调用标准的DOM API更改节点相应的属性
+c) type变为另外一个字符串或组件，React会将old节点及其子节点全部删除，重新创建节点而不是替换节点
+d) 子元素有key属性的情况下，子元素位置移动，React会通过比较key知道子元素是新增、删除还是移动
+</pre>
+	</li>
+	<li>
+<pre>懒加载
+React.lazy()可以让代码分割更容易
+</pre>
+	</li>
+	<li>
+<pre>性能、优化
+a) 相同类型的子元素数组间加key
+b) 不同类型同级元素不要随便删除某一元素节点，若要删除可在此位置放入null,false,undefined等值
+c) 元素的属性若为对象或引用了函数等引用类型的数据，状态更新前后的对象或函数已经不是同一个，在render之外先用变量存储起来
+d) 在我们能确定不更新组件的情况下调用shouldComponentUpdate()什么周期
+e) 组件继承pureComponent，适用于展示组件，与component的区别在与对state和props做浅比较，不适合引用类型的数据，类似于我们自己在shouldComponentUpdate中比较
+d) 组件拆分，利用webpack打包，同一组件多次引用的情况下只打包一次
+</pre>
+	</li>
+</ol>
