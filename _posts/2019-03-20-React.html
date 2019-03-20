@@ -59,8 +59,10 @@ d) 子元素有key属性的情况下，子元素位置移动，React会通过比
 </pre>
 	</li>
 	<li>
-<pre>懒加载
-一个组件中引用了另一组件，首屏可能并不需要渲染该组件，对于这样的组件可以使用懒加载React.lazy()
+<pre>懒加载组件
+一个组件中引用了另一组件，首屏可能并不需要渲染该组件，对于这样的组件可以使用懒加载
+React.lazy()动态导入组件，实现按需加载与代码分割。懒加载组件不会被打包入主文件中。
+React.Suspense组件用来包装lazy组件，在lazy组件未加载完时将fallback内容呈现给用户
 <div style="background-color: #f8f8f8">
 
 	import React from "react";
@@ -96,12 +98,10 @@ d) 子元素有key属性的情况下，子元素位置移动，React会通过比
 	export default App;
 
 </div>
-用懒加载方式加载的组件不会被打包入主文件中。
-若在组件StockChart还未下载完成时调用该组件，将会渲染fallback属性中传入的值，当代码下载完成后才会渲染组件。
 </pre>
 	</li>
 	<li>
-<pre>预加载
+<pre>预加载组件
 由于懒加载方式在第一次加载组件时会出来降级方案loading，为了解决可以使用预加载方式即提前调用lazy()
 当import StockChart组件时就下载组件且不会阻塞StockTable的加载
 代码修改如下：
@@ -114,6 +114,12 @@ d) 子元素有key属性的情况下，子元素位置移动，React会通过比
 </pre>
 	</li>
 	<li>
+<pre>懒加载页面
+SPA中懒加载页面就是将js代码分成N个页面的文件，在用户跳转路由时加载相应的js文件，减少首页加载js的文件大小加速首屏显示速度
+
+</pre>
+	</li>
+	<li>
 <pre>性能、优化
 a) 相同类型的子元素数组间加key
 b) 不同类型同级元素不要随便删除某一元素节点，若要删除可在此位置放入null,false,undefined等值
@@ -121,6 +127,8 @@ c) 元素的属性若为对象或引用了函数等引用类型的数据，状�
 d) 在我们能确定不更新组件的情况下调用shouldComponentUpdate()什么周期
 e) 组件继承pureComponent，适用于展示组件，与component的区别在与对state和props做浅比较，不适合引用类型的数据，类似于我们自己在shouldComponentUpdate中比较
 d) 组件拆分，利用webpack打包，同一组件多次引用的情况下只打包一次
+f) 路由分割，同一路由下的js代码会被打包进同一js文件，将项目中页面拆分成多个路由可减少js文件的大小
+g) 组件懒加载或预加载
 </pre>
 	</li>
 </ol>
