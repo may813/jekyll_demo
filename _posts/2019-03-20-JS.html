@@ -1,0 +1,161 @@
+---
+layout: default
+title: JS
+---
+<h2>{{ page.title }}</h2>
+<ol>
+	<li>
+<pre>防抖和节流
+防抖是将多次操作合并，一定时间内只执行最后一次操作
+</pre>
+	</li>
+	<li>
+<pre>promise
+a) promise对象是用来解决异步处理的一种方案，可以获取异步操作的消息，promise对象有3中状态，pending、fulfilled、rejected。
+b) 可通过调用promise实例的方法then传递两个回调函数，分别是promise状态为fulfilled和rejected时调用。
+c) promise对象内的处理出现异常或手动抛出的情况下，可通过实例的catch捕获异常。
+d) promise实例的all方法可以打包处理一组promise对象数组为一个promise。比如一个页面同时调用两个接口，在两个接口都请求成功完成后执行其他操作。
+</pre>
+	</li>
+	<li>
+<pre>Let const 创建块级作用域的变量
+</pre>
+	</li>
+	<li>
+<pre>解构赋值 从一推对象中剔除某些对象，两个变量交换值，扩展运算符
+</pre>
+	</li>
+	<li>
+<pre>super 指向当前函数所在对象的原型对象
+</pre>
+	</li>
+	<li>
+<pre>String
+1、过去字符串与变量拼接是用+，现在可以用·直接拼接字符串与变量。
+2、includes()  'abb'.includes('a') // true
+</pre>
+	</li>
+	<li>
+<pre>Object
+a) Object.assign() 用于对象新增属性或者多个对象合并，只能合并对象自身的属性，不能合并继承来的或者不可枚举的属性以及get/set属性，但会执行get/set函数，取return值
+b) getOwnPropertyDescriptors() 获取对象自身属性的描述
+c) getPrototypeOf()/setPrototypeOf() 设置获取对象的原型
+d) 
+Object.keys() 获取对象的key值 Object.keys({a:1,b:2}) // ["a", "b"]
+Object.values() 获取对象的value值 Object.values({a:1,b:2}) // [1, 2]
+Object.entries() 获取对象的键值对数组  Object.entries({a:1,b:2}) // [[“a”, 1], [“b”, 2]]
+</pre>
+	</li>
+	<li>
+<pre>Fundtion
+箭头函数 函数里的this指向的是函数定义时的对象，而不是函数执行时的对象。
+1、箭头函数不能用做构造函数，因为他没有自己的this，无法实例化。
+2、箭头箭头函数内没有arguments
+3、函数参数默认赋值
+4、双冒号运算符，用来取代bind、call、apply
+	foo::bar === bar.bind(foo)
+	foo::bar(…arguments) === bar.apply(foo, arguments)
+</pre>
+	</li>
+	<li>
+<pre>Class extends
+1、ES6的class是ES5生成实例对象的构造函数的语法糖，参考了java语言、定义了一个类的概念更新面向对象编程。
+2、类内部定义的方法不可枚举
+3、es6的class类必须用new命令操作，es5的构造函数不用new也可以执行。
+4、es6的class类不存在变量提升，必须先定义class之后才能实例化，es5可以将构造函数写在实例化之后。
+5、es5的继承，实质是先创造之类的实例对象this，然后将父类的方法添加到this上；
+es6的继承，实质是先将父类的实例对象的属性和方法加到this上，所以必须先调用super，然后再将子类的构造函数修改this。
+</pre>
+	</li>
+	<li>
+<pre>for..in  for…of
+for…in 是为普通对象({key: value})设计的（可遍历数组），所以只能遍历到字符串类型的键key
+const students = {
+    xiaohong: {
+        age: '22',
+        fav: ['sleep', 'basketball'],
+        teachers: {
+            english: 'daming',
+            chinense: 'helios',
+            math: ['helios2', 'helios3']
+        }
+    },
+    xiaoming: {
+        age: '22',
+        fav: ['sleep', 'basketball', 'football'],
+        teachers: {
+            english: 'daming',
+            chinense: 'helios',
+            math: ['helios2', 'helios3']
+        }
+    },
+}
+for(const item in students){
+	console.log(item)
+}
+// xiaohong
+// xiaoming
+
+for(const item of students){
+	console.log(item)
+}
+// Uncaught TypeError: students is not iterable
+
+const people = ['may','nick']
+for(const item in people){
+	console.log(item)
+}
+// 0
+// 1
+
+for(const item of people){
+	console.log(item)
+}
+// may
+// nick
+</pre>
+	</li>
+	<li>
+<pre>Set 
+set数据结构类似于数组，但是成员唯一
+操作方法：
+add(value)
+delete(value)
+has(value)
+clear()
+遍历方法：
+keys() set数据接口返回的keys和values相同
+values()
+entries() 返回键值对的遍历器
+forEach()
+for…of遍历set
+</pre>
+	</li>
+	<li>
+<pre>Map
+传统的js对象只能用字符串当键，Map数据结构可使用各种类型的值作为键
+创建Map:
+new Map([[name: ’may’], [age: 29]])
+或 let a = new Map(); a.set(‘name’, ‘may’).set(‘age’, 29)
+遍历方法：
+keys() 
+values()
+entries() 
+forEach()
+let a = new Map([
+    ['name','leo'],
+    ['age',18]
+]);
+for (let [k, v] of a){...};
+for (let i of a.keys()){...};
+for (let i of a.values()){...};
+for (let i of a.entries()){...};
+</pre>
+	</li>
+	<li>
+<pre>Proxy
+代理器，可代理任意对象，对其操作做自定义的处理
+new Proxy(target, handler)
+</pre>
+	</li>
+</ol>

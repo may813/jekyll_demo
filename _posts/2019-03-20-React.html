@@ -60,7 +60,57 @@ d) 子元素有key属性的情况下，子元素位置移动，React会通过比
 	</li>
 	<li>
 <pre>懒加载
-React.lazy()可以让代码分割更容易
+一个组件中引用了另一组件，首屏可能并不需要渲染该组件，对于这样的组件可以使用懒加载React.lazy()
+<div style="background-color: #f8f8f8">
+
+	import React from "react";
+	import StockTable from "./StockTable";
+	const StockChart = React.lazy(()=>
+		import("./StockChart")
+	);
+
+	class App extends React.Component {
+	  state = {
+	    selectedStock: null
+	  };
+	  render() {
+	    const { stocks } = this.props;
+	    const { selectedStock } = this.state;
+	    return (
+	      <React.Suspense fallback={<div>Loading...</div>}>
+	        <StockTable
+	          stocks={stocks}
+	          onSelect={selectedStock => this.setState({ selectedStock })}
+	        />
+	        {selectedStock && (
+	          <StockChart
+	            stock={selectedStock}
+	            onClose={() => this.setState({ selectedStock: false })}
+	          />
+	        )}
+	      </React.Suspense>
+	    );
+	  }
+	}
+
+	export default App;
+
+</div>
+用懒加载方式加载的组件不会被打包入主文件中。
+若在组件StockChart还未下载完成时调用该组件，将会渲染fallback属性中传入的值，当代码下载完成后才会渲染组件。
+</pre>
+	</li>
+	<li>
+<pre>预加载
+由于懒加载方式在第一次加载组件时会出来降级方案loading，为了解决可以使用预加载方式即提前调用lazy()
+当import StockChart组件时就下载组件且不会阻塞StockTable的加载
+代码修改如下：
+<div style="background-color: #f8f8f8">
+
+	const stockChartPromise = import("./StockChart");
+	const StockChart = React.lazy(() => stockChartPromise);
+	
+</div>
 </pre>
 	</li>
 	<li>
