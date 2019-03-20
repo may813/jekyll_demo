@@ -77,7 +77,7 @@ d) 子元素有key属性的情况下，子元素位置移动，React会通过比
 	    const { stocks } = this.props;
 	    const { selectedStock } = this.state;
 	    return (
-	      <React.Suspense fallback={<div>Loading...</div>}>
+	      <React.Suspense fallback={Loading...}>
 	        <StockTable
 	          stocks={stocks}
 	          onSelect={selectedStock => this.setState({ selectedStock })}
