@@ -1,0 +1,30 @@
+---
+layout: default
+title: CSS相关知识点
+---
+<h2>{{ page.title }}</h2>
+<ol>
+	<li>
+<pre>清除浮动的方法
+一个父元素高度自适应，内部有浮动元素时，父元素高度无法撑开
+方法一：
+为父元素设置overflow为visible以外的值，如：auto,hidden,scroll
+为父元素设置display
+</pre>
+	</li>
+	<li>
+<pre>BFC块格式化上下文
+是一个区域，规定了内部块盒的渲染方式，以及浮动相互之间的影响关系。
+a) BFC会隔离内部与外部，其渲染相互之间不影响
+b) BFC区域不会和外部浮动盒子外边距发送叠加
+c) BFC计算高度的时候内部浮动元素的高度也会计算在内
+</pre>
+<pre>创建BFC的方式： 浮动元素（float不是none）、绝对定位元素(absolute或fixed)、行内块元素（display:inline-block)、
+overflow(值不为visible)、display(flow-root)、contain(layout、content、strict)、
+弹性元素（display为flex或inline-flex元素的直接子元素）、网格元素（display为grid或inline-grid元素的直接子元素）,zoom:1(IE)
+
+解决：
+浮动高度无法撑开，外边距合并(垂直方向边距会叠加)
+</pre>
+	</li>
+</ol>
