@@ -1,0 +1,46 @@
+---
+layout: default
+title: jquery
+---
+<h2>{{ page.title }}</h2>
+<ol>
+	<li>
+<pre>jQuery.extend( target [, object1 ] [, objectN ] ) 浅拷贝
+将对象object1，objectN中内容合并到对象target中。相同属性后面的值会覆盖前面的
+js实现$.extend方法
+function extend(target){
+	const arg = Array.from(arguments);
+	for(let i=1;i&lt;arg.length;i++){
+		const _this = arg[i];
+		for(const key in _this){
+			if(_this.hasOwnProperty(key) && _this[key] !== undefined){
+					target[key] = _this[key]
+			}
+		}
+	}
+	return target;
+}
+var obj1 = {
+    a: 1,
+    b: { b1: 1, b2: 2 }
+};
+
+var obj2 = {
+    b: { b1: 3, b3: 4 },
+    c: 3
+};
+
+var obj3 = {
+    d: 4
+}
+$.extend(obj1, obj2 , obj3)
+extend(obj1, obj2 , obj3)
+
+jQuery.extend( [deep ], target, object1 [, objectN ] ) 深拷贝
+</pre>
+	</li>
+	<li>
+<pre>
+</pre>
+	</li>
+</ol>

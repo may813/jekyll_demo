@@ -6,7 +6,61 @@ title: JS
 <ol>
 	<li>
 <pre>防抖和节流
-防抖是将多次操作合并，一定时间后执行最后一次操作
+防抖是将多次操作合并，一定时间后执行最后一次操作。用于输入框输入查询，窗口缩放
+	function fun(){
+		console.log(1);
+	}
+	var clickEvent = (function () {
+		var timer = null;
+		return function(time){
+			clearTimeout(timer);
+			timer = setTimeout(function(){
+				fun();
+			}, time)
+		}
+	})();
+	$('#box1').on('click', function(){
+		clickEvent(2000)
+	});
+
+
+希望第一次触发操作时能执行，修改如下:
+
+	var clickEvent = (function () {
+		var timer = null;
+		var flagNew = true;
+		return function(time, flag){
+			if(flagNew){ //存储是否第一次
+				flagNew = !flag;
+				fun();
+			}else{
+				clearTimeout(timer);
+				timer = setTimeout(function(){
+					fun();
+				}, time)
+			}
+		}
+	})();
+	$('#box1').on('click', function(){
+		clickEvent(2000, true)
+	});
+
+</pre>
+	</li>
+	<li>
+<pre>
+节流是持续触发事件，每个一段时间只执行一次
+	var clickEvent = (function () {
+		var timer = null;
+		return function(time){
+			if(!timer){
+				timer = setTimeout(function(){
+					timer = null;
+					fun();
+				}, time)
+			}
+		}
+	})();
 </pre>
 	</li>
 	<li>
@@ -44,6 +98,19 @@ d)
 Object.keys() 获取对象的key值 Object.keys({a:1,b:2}) // ["a", "b"]
 Object.values() 获取对象的value值 Object.values({a:1,b:2}) // [1, 2]
 Object.entries() 获取对象的键值对数组  Object.entries({a:1,b:2}) // [[“a”, 1], [“b”, 2]]
+</pre>
+	</li>
+	<li>
+<pre>Array
+a) 拷贝
+	浅拷贝Array.concat()，Array.slice()
+	var arr = ['old', 1, true, null, undefined];
+	var new_arr = arr.concat();
+	var new_arr = arr.slice();
+
+	深拷贝
+	var arr = ['old', 1, true, ['old1', 'old2'], {old: 1}]
+	var new_arr = JSON.parse( JSON.stringify(arr) );  // 不能拷贝undefined和函数
 </pre>
 	</li>
 	<li>
