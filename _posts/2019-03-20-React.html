@@ -30,6 +30,41 @@ React提供了4个API将虚拟DOM输出为HTML文本
 	</li>
 	<li>
 <pre>生命周期
+1）挂载阶段：
+react15 constructor componentWillMount render componentDidMount
+react16 constructor getDerivedStateFromProps render componentDidMount
+2) 更新阶段：
+react15 componentWillReceiveProps shouldComponentUpdate componentWillUpdate render componentDidUpdate
+react16 getDeriverStateFromProps shouldComponentUpdate render getSnapshotBeforeUpdate componentDidUpdate
+3) 卸载阶段
+componentWillUnMount
+
+各生命周期适合做的事
+1) 服务器请求数据
+对于组件所需的初始数据，最合适的地方，是在componentDidMount方法中
+当进行服务器渲染时（SSR)，componentWillMount是会被调用两次的，一次在服务器端，一次在客户端，这时候就会导致额外的请求发生。
+2）setState
+死循环：shouldComponentUpdate, componentWillUpdate, render, componentDidUpdate
+</pre>
+	</li>
+	<li>
+<pre>组件类型：关注点分离的思想--UI展现和数据逻辑的分离
+1）函数组件和类组件
+类组件可以维护自身的状态变量（state)，有生命周期
+// 函数组件
+function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+
+// 类组件
+class Welcome extends React.Component {
+  render() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+}
+2）无状态组件和有状态组件
+区别在于组件内部是否维护state。无状态组件只根据外部组件传入的props返回渲染的react元素；有状态组件由props和自身的state共同返回渲染的react元素。
+3）展示型组件和容器型组件
 </pre>
 	</li>
 	<li>
@@ -123,7 +158,7 @@ SPA中懒加载页面就是将js代码分成N个页面的文件，在用户跳�
 <pre>性能、优化
 a) 相同类型的子元素数组间加key
 b) 不同类型同级元素不要随便删除某一元素节点，若要删除可在此位置放入null,false,undefined等值
-c) 元素的属性若为对象或引用了函数等引用类型的数据，状态更新前后的对象或函数已经不是同一个，在render之外先用变量存储起来
+c) 元素的属性若为对象或引用了函数等引用类型的数据或者绑定的事件为匿名函数，状态更新前后的对象或函数已经不是同一个，在render之外先用变量存储起来
 d) 在我们能确定不更新组件的情况下调用shouldComponentUpdate()什么周期
 e) 组件继承pureComponent，适用于展示组件，与component的区别在与对state和props做浅比较，不适合引用类型的数据，类似于我们自己在shouldComponentUpdate中比较
 d) 组件拆分，利用webpack打包，同一组件多次引用的情况下只打包一次

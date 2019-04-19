@@ -5,6 +5,111 @@ title: JS
 <h2>{{ page.title }}</h2>
 <ol>
 	<li>
+<pre>
+基本数据 null, underfined, string, number, boolean, symbol
+引用类型 object, array, function
+栈 先进后出，后进先出
+队列 先进先出
+</pre>
+	</li>
+	<li>
+<pre>变量对象创建：
+1） 建立arguments对象。检查当前上下文中的参数，建立该对象下的属性与属性值。
+2） 检查当前上下文的函数声明，也就是使用function关键字声明的函数。在变量对象中以函数名建立一个属性，属性值为指向该函数所在内存地址的引用。如果函数名的属性已经存在，那么该属性将会被新的引用所覆盖。
+3） 检查当前上下文中的变量声明，每找到一个变量声明，就在变量对象中以变量名建立一个属性，属性值为undefined。如果该变量名的属性已经存在，为了防止同名的函数被修改为undefined，则会直接跳过，原属性值不会被修改。
+</pre>
+	</li>
+	<li>
+<pre>new 一个对象原理
+new关键字让构造函数具有了与普通函数不同的许多特点，而new的过程中，执行了如下过程：
+1） 声明一个中间对象；
+2） 将该中间对象的原型指向构造函数的原型；
+3） 将构造函数的this，指向该中间对象；
+4） 返回该中间对象，即返回实例对象。
+function Person(name, age){
+	this.name = name;
+	this.age = age;
+	this.getName = function() {
+        console.log('this is constructor.');
+    }
+}
+Person.prototype.getName = function() {
+    return this.name;
+}
+function newObject(fn){
+	const obj = {};
+	const prototype = fn.prototype;
+	if(prototype != null){
+		obj.__proto__ = prototype;
+		// ES6
+		// Object.setPrototypeOf(obj, prototype);
+	}
+	const re = fn.call(obj, [].slice.call(arguments, 1));
+	if(typeof re == 'object' || typeof re == 'function'){
+		return re;
+	}
+	return obj;
+}
+const a = newObject(Person, 'may', '29');
+const b = new Person('nick', '28');
+console.log(a instanceof Person) // true
+console.log(b instanceof Person) // true
+console.log(Person.prototype.constructor === Person) // true
+// ES5
+console.log(a.__proto__.constructor === Person)  // true
+console.log(b.__proto__.constructor === Person)  // true
+// ES6
+console.log(Object.getPrototypeOf(a).constructor === Person)  // true
+console.log(Object.getPrototypeOf(b).constructor === Person)  // true
+a.getName(); // this is constructor.
+b.getName(); // this is constructor.
+构造函数(Person)的prototype与所有实例对象的__proto__都指向原型对象(Person.prototype)。
+原型对象(Person.prototype)的constructor指向构造函数(Person)。
+</pre>
+	</li>
+	<li>
+<pre>继承
+function Person(name, age){
+	this.name = name;
+	this.age = age;
+	this.getName = function() {
+        console.log('this is constructor.');
+    }
+}
+Person.prototype.getName = function() {
+    console.log('this is getName.');
+}
+
+function Child(name, age, like){
+	Person.call(this, name, age);
+	this.like = like;
+}
+
+Child.prototype.getLive = function() {
+	console.log('this is getLive.');
+}
+Child.prototype = new Person('may', '29');
+const a = new Child('may', '29', 'eat');
+或
+Child.prototype = (function(p, options){
+	const obj = {};
+	obj.__proto__ = p;
+	Object.defineProperties(obj, options);
+	return obj;
+})(Person.prototype, {
+	constructor: {
+		value: Child,
+	},
+	getLive: {
+		value: function(){
+			console.log('this is getLive.');
+		}
+	}
+});
+const b = new Child('nick', '28', 'sleep');
+</pre>
+	</li>
+	<li>
 <pre>防抖和节流
 防抖是将多次操作合并，一定时间后执行最后一次操作。用于输入框输入查询，窗口缩放
 	function fun(){
